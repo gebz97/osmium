@@ -1,0 +1,3 @@
+DROP SCHEMA IF EXISTS repomgr CASCADE;
+CREATE SCHEMA repomgr;
+
