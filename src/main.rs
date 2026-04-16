@@ -1,3 +1,4 @@
+use axum::routing::post;
 use axum::{Router, routing::get};
 
 use crate::common::config::AppConfig;
@@ -8,23 +9,35 @@ pub mod web;
 
 fn main() -> Result<(), String> {
     let conf = AppConfig::default();
-    let thr = std::thread::available_parallelism().map_err(|e| {
-        eprintln!("{}", e);
-        String::from("Unable to get thread count")
-    })?;
+    // let thr = std::thread::available_parallelism().map_err(|e| {
+    //     eprintln!("{}", e);
+    //     String::from("Unable to get thread count")
+    // })?;
 
     let rt = tokio::runtime::Builder::new_multi_thread()
-        .worker_threads(thr.get().saturating_sub(2))
+        // .worker_threads(thr.get().saturating_sub(2) &conf.thread_count)
+        .worker_threads(conf.thread_count)
         .enable_all()
         .build()
         .map_err(|e| e.to_string())?;
 
-    let router = Router::new().route("/status", get(web::router::app_status));
+    let router = Router::new()
+        .route("/status", get(web::router::app_status))
+        .route("/snooze", get(web::snoozy::snooze))
+        .route("/scan", post(web::scan::scan_handler))
+        .route("/spoopy", get(web::router::spoopy_handler));
+
     let listener = tokio::net::TcpListener::bind(&conf.bind_addr);
+
     rt.block_on(async {
         // your async entrypoint here
         let listener = listener.await.unwrap();
-        axum::serve(listener, router).await.unwrap();
+        // axum::serve(listener, router).await.unwrap();
+        if let Err(e) = axum::serve(listener, router).await {
+            eprint!("Error: {}", e);
+        };
+        // Keep runtime alive
+        // std::future::pending::<()>().await;
     });
 
     Ok(())

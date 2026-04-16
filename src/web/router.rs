@@ -16,5 +16,9 @@ use crate::common::config::{AppConfig, AppState};
 // }
 
 pub async fn app_status() -> String {
-    return String::from("100% fam..")
+    String::from("100% fam..")
+}
+
+pub async fn spoopy_handler() {
+    panic!("HAHAHAHA")
 }

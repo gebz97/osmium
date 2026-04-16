@@ -3,7 +3,7 @@ use std::sync::Arc;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AppConfig {
-    pub thread_count: i8,
+    pub thread_count: usize,
     pub bind_addr: String,
 }
 

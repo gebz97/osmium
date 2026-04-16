@@ -2629,6 +2629,8 @@ dependencies = [
  "anyhow",
  "axum",
  "clap",
+ "futures",
+ "ping",
  "reqwest",
  "russh",
  "sea-orm",
@@ -2819,6 +2821,17 @@ name = "pin-project-lite"
 version = "0.2.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a89322df9ebe1c1578d689c92318e070967d1042b512afbe49518723f4e6d5cd"
+
+[[package]]
+name = "ping"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "044b1fa4f259f4df9ad5078e587b208f5d288a25407575fcddb9face30c7c692"
+dependencies = [
+ "rand 0.9.4",
+ "socket2",
+ "thiserror 2.0.18",
+]
 
 [[package]]
 name = "pkcs1"
