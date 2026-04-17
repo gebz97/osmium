@@ -17,7 +17,11 @@ pub struct Model {
     pub os_version: Option<String>,
     pub os_major: Option<String>,
     pub kernel_version: Option<String>,
+    // #[sea_orm(ignore, column_type = "custom(\"inet\")", select_as = "text", nullable)]
+    #[sea_orm(column_type = "custom(\"inet\")", select_as = "text", nullable)]
     pub ip_address: Option<String>,
+    // #[sea_orm(ignore, column_type = "custom(\"cidr\")", select_as = "text", nullable)]
+    #[sea_orm(column_type = "custom(\"cidr\")", select_as = "text", nullable)]
     pub subnet: Option<String>,
     pub environment: Option<String>,
     pub created_at: Option<DateTime>,

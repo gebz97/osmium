@@ -4,23 +4,16 @@ use sea_orm::entity::prelude::*;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, Serialize, Deserialize)]
-#[sea_orm(schema_name = "hostmgr", table_name = "netlinks")]
+#[sea_orm(schema_name = "hostmgr", table_name = "services")]
 pub struct Model {
     #[sea_orm(primary_key)]
     pub id: i32,
-    #[sea_orm(unique_key = "netlinks_host_id_interface_name_key")]
+    #[sea_orm(unique_key = "services_host_id_service_name_key")]
     pub host_id: i32,
-    #[sea_orm(unique_key = "netlinks_host_id_interface_name_key")]
-    pub interface_name: String,
-    pub ip_address: Option<String>,
-    #[sea_orm(
-        ignore,
-        column_type = "custom(\"macaddr\")",
-        select_as = "text",
-        nullable
-    )]
-    pub mac_address: Option<String>,
+    #[sea_orm(unique_key = "services_host_id_service_name_key")]
+    pub service_name: String,
     pub status: Option<String>,
+    pub enabled: Option<bool>,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]

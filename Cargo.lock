@@ -2630,6 +2630,7 @@ dependencies = [
  "axum",
  "clap",
  "futures",
+ "log",
  "ping",
  "reqwest",
  "russh",

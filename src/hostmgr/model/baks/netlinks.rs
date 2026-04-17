@@ -12,6 +12,7 @@ pub struct Model {
     pub host_id: i32,
     #[sea_orm(unique_key = "netlinks_host_id_interface_name_key")]
     pub interface_name: String,
+    #[sea_orm(ignore, column_type = "custom(\"inet\")", select_as = "text", nullable)]
     pub ip_address: Option<String>,
     #[sea_orm(
         ignore,

@@ -11,8 +11,8 @@ CREATE TABLE hostmgr.hosts (
     os_version VARCHAR(100),
     os_major VARCHAR(100),
     kernel_version VARCHAR(100),
-    ip_address INET,
-    subnet CIDR,
+    ip_address VARCHAR(50),
+    subnet VARCHAR(50),
     environment VARCHAR(50),
     -- business_service VARCHAR(50) REFERENCES hostmgr.business_service(name),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -79,7 +79,7 @@ CREATE TABLE hostmgr.netlinks (
     id SERIAL PRIMARY KEY,
     host_id INTEGER NOT NULL REFERENCES hostmgr.hosts(id) ON DELETE CASCADE,
     interface_name VARCHAR(50) NOT NULL,
-    ip_address INET,
+    ip_address VARCHAR(50),
     mac_address MACADDR,
     status VARCHAR(50),
     UNIQUE(host_id, interface_name)
@@ -94,3 +94,73 @@ CREATE INDEX idx_services_host_id ON hostmgr.services(host_id);
 CREATE INDEX idx_mounts_host_id ON hostmgr.mounts(host_id);
 CREATE INDEX idx_disks_host_id ON hostmgr.disks(host_id);
 CREATE INDEX idx_netlinks_host_id ON hostmgr.netlinks(host_id);
+
+INSERT INTO hostmgr.hosts (
+    hostname, fqdn, physical, status, os_name, os_version, os_major, 
+    kernel_version, ip_address, subnet, environment
+) VALUES
+(
+    'pg',
+    'pg.gebz.local',
+    true,
+    'active',
+    'Rocky Linux',
+    '9.7',
+    '9',
+    '5.14.0-362.18.1.el9_3.x86_64',
+    '192.168.1.31',
+    '192.168.1.0/24',
+    'production'
+),
+(
+    'web01',
+    'web01.gebz.local',
+    true,
+    'active',
+    'Ubuntu',
+    '22.04 LTS',
+    '22',
+    '5.15.0-91-generic',
+    '192.168.1.50',
+    '192.168.1.0/24',
+    'production'
+),
+(
+    'web02',
+    'web02.gebz.local',
+    true,
+    'active',
+    'Ubuntu',
+    '22.04 LTS',
+    '22',
+    '5.15.0-91-generic',
+    '192.168.1.51',
+    '192.168.1.0/24',
+    'production'
+),
+(
+    'redis01',
+    'redis01.gebz.local',
+    false,
+    'active',
+    'CentOS',
+    '8.5.2111',
+    '8',
+    '4.18.0-348.el8.x86_64',
+    '10.0.0.25',
+    '10.0.0.0/24',
+    'production'
+),
+(
+    'dev-box',
+    'dev-box.gebz.local',
+    false,
+    'inactive',
+    'Fedora',
+    '39',
+    '39',
+    '6.6.13-200.fc39.x86_64',
+    '192.168.100.10',
+    '192.168.100.0/24',
+    'development'
+);
