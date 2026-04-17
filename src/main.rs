@@ -47,9 +47,9 @@ fn main() -> Result<(), String> {
         };
         let router = Router::new()
             .route("/status", get(web::router::app_status))
-            .route("/snooze", get(web::snoozy::snooze))
+            // .route("/snooze", get(web::snoozy::snooze))
+            // .route("/spoopy", get(web::router::spoopy_handler))
             .route("/scan", post(web::scan::scan_handler))
-            .route("/spoopy", get(web::router::spoopy_handler))
             .route("/hosts", get(web::host::get_hosts_handler).post(create_host_handler))
             .route(
                 "/hosts/{id}",
